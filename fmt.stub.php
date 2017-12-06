@@ -4900,7 +4900,11 @@ final class ResizeSpaces extends FormatterPass {
 					T_WHITESPACE !== $prevId &&
 					T_WHITESPACE !== $nextId
 				) {
-					$this->appendCode(' ' . $text . $this->getSpace(!$this->rightTokenIs(ST_COLON) && ($id !== ST_QUESTION || !$this->rightTokenIs(T_STRING))));
+					$this->appendCode(
+						$this->getSpace($id !== ST_QUESTION || !$this->leftMemoUsefulTokenIs(ST_PARENTHESES_OPEN))
+						. $text
+						. $this->getSpace(!$this->rightTokenIs(ST_COLON) && ($id !== ST_QUESTION || !$this->rightTokenIs(T_STRING)))
+					);
 					break;
 				}
 				$this->appendCode($text);
@@ -5226,9 +5230,9 @@ final class ResizeSpaces extends FormatterPass {
 				$this->appendCode($text);
 				break;
 
-            case T_YIELD_FROM:
-                $this->appendCode($text . $this->getSpace($this->rightTokenIs(T_STRING)));
-                break;
+			case T_YIELD_FROM:
+				$this->appendCode($text . $this->getSpace($this->rightTokenIs(T_STRING)));
+				break;
 
 			default:
 				$this->appendCode($text);
