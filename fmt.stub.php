@@ -6114,7 +6114,7 @@ final class PSR2KeywordsLowerCase extends FormatterPass {
 	}
 
 	public function format($source) {
-		$this->tkns = token_get_all($source);
+		$this->tkns = token_get_all($source, TOKEN_PARSE);
 		$this->code = '';
 		while (list($index, $token) = each($this->tkns)) {
 			list($id, $text) = $this->getToken($token);
@@ -6125,15 +6125,8 @@ final class PSR2KeywordsLowerCase extends FormatterPass {
 				T_INLINE_HTML == $id ||
 				T_COMMENT == $id ||
 				T_DOC_COMMENT == $id ||
-				T_CONSTANT_ENCAPSED_STRING == $id
-			) {
-				$this->appendCode($text);
-				continue;
-			}
-
-			if (
+				T_CONSTANT_ENCAPSED_STRING == $id ||
 				T_STRING == $id
-				&& $this->leftUsefulTokenIs([T_DOUBLE_COLON, T_OBJECT_OPERATOR])
 			) {
 				$this->appendCode($text);
 				continue;
