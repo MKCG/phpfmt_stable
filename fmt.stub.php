@@ -8321,7 +8321,7 @@ EOT;
 				$this->leftTokenSubsetIsAtIdx($this->tkns, $i, [T_INSTANCEOF, T_NEW]) ||
 				$this->rightTokenSubsetIsAtIdx($this->tkns, $i, T_DOUBLE_COLON)
 			) {
-				$this->tkns[$i] = [T_STRING, self::PLACEHOLDER];
+				$this->tkns[$i] = [T_STRING, static::PLACEHOLDER];
 			}
 		}
 	}
